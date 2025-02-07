@@ -10,6 +10,8 @@ import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil3.load
+import coil3.request.crossfade
+import coil3.request.placeholder
 import de.siebes.fabian.xkcd.R
 import de.siebes.fabian.xkcd.databinding.FragmentHomeBinding
 
@@ -42,7 +44,10 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.imgUrl.observe(viewLifecycleOwner) {
-            binding.imgComic.load(it)
+            binding.imgComic.load(it) {
+                crossfade(true)
+                placeholder(R.drawable.loading_image_black_24)
+            }
         }
 
         homeViewModel.loading.observe(viewLifecycleOwner) {
