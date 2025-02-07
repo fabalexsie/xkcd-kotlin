@@ -48,7 +48,7 @@ class HomeViewModel : ViewModel() {
         if (it == null) {
             "Loading..." // TODO: use string resource
         } else {
-            "${it.day}.${it.month}.${it.year}" // TODO: use string resource
+            "${it.day.padStart(2, '0')}.${it.month.padStart(2, '0')}.${it.year}" // TODO use SimpleDateFormatter
         }
     }
 
