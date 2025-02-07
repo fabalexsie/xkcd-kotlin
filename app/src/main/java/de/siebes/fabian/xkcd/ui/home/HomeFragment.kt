@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -57,6 +58,14 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.loadComic() // load current comic
+
+        homeViewModel.altText.observe(viewLifecycleOwner) {
+            val altText = it
+            binding.imgComic.setOnLongClickListener {
+                Toast.makeText(context, altText, Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
 
         return root
     }

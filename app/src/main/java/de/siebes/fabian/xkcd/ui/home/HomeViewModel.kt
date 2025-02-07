@@ -53,4 +53,6 @@ class HomeViewModel : ViewModel() {
     }
 
     val imgUrl: LiveData<String> = _comic.map { it?.imgUrl ?: "" }
+
+    val altText: LiveData<String> = _comic.map { it?.alt ?: "" }
 }
