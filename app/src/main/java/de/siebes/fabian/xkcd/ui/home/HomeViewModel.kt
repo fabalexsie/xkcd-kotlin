@@ -40,6 +40,8 @@ class HomeViewModel : ViewModel() {
         }
     }
 
+    val comicNumber: LiveData<Int?> = _comic.map { it?.num }
+
     val title: LiveData<String> = _comic.map { it?.title ?: "Loading..." }
 
     val dateStr: LiveData<String> = _comic.map {

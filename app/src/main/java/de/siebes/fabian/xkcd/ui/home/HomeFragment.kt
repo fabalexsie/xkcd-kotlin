@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil3.load
+import de.siebes.fabian.xkcd.R
 import de.siebes.fabian.xkcd.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -44,6 +46,14 @@ class HomeFragment : Fragment() {
 
         homeViewModel.loading.observe(viewLifecycleOwner) {
             binding.progressComicLoading.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        homeViewModel.comicNumber.observe(viewLifecycleOwner) {
+            if(it != null) {
+                (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.title_home) + " #$it"
+            } else {
+                (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.title_home)
+            }
         }
 
         homeViewModel.loadComic() // load current comic
