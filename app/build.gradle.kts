@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.okhttp)
     implementation(libs.coil.coil)
     implementation(libs.coil.network)
     testImplementation(libs.junit)
