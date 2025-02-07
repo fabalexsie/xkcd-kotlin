@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
         homeViewModel.imgUrl.observe(viewLifecycleOwner) {
             binding.imgComic.load(it) {
                 crossfade(true)
-                placeholder(R.drawable.loading_image_black_24)
+                placeholder(R.drawable.loading_image_black_24dp)
             }
         }
 
