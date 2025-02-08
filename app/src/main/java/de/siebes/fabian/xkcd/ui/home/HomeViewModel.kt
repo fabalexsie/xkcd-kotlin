@@ -7,15 +7,12 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import de.siebes.fabian.xkcd.helper.ComicLoader
 import de.siebes.fabian.xkcd.helper.FavoriteManager
+import de.siebes.fabian.xkcd.helper.MyDateFormatter
 import de.siebes.fabian.xkcd.model.Comic
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 import java.util.Random
 
 class HomeViewModel : ViewModel() {
-
-    private val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY)
 
     private val _loading = MutableLiveData<Boolean>().apply {
         value = false
@@ -74,7 +71,7 @@ class HomeViewModel : ViewModel() {
         if (it == null) {
             ""
         } else {
-            sdf.format(it.date)
+            MyDateFormatter.format(it.date)
         }
     }
 
