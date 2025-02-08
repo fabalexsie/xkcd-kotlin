@@ -189,6 +189,18 @@
             android:contentDescription="@string/content_description_download"
             android:layout_weight="1"
             android:src="@drawable/ic_download_black_24dp" />
+
+        <ImageView
+            android:id="@+id/img_action_favorite"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:contentDescription="@string/content_description_download"
+            android:layout_weight="1"
+            android:src="@drawable/ic_favorite_border_black_24dp" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

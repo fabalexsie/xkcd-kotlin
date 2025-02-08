@@ -86,6 +86,14 @@ class HomeFragment : Fragment() {
             }
         }
 
+        homeViewModel.isFavorite.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.imgActionFavorite.setImageResource(R.drawable.ic_favorite_black_24dp)
+            } else {
+                binding.imgActionFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+            }
+        }
+
         homeViewModel.loadComic() // load current comic
 
         binding.clPreviousComic.setOnClickListener {
@@ -102,6 +110,10 @@ class HomeFragment : Fragment() {
                 homeViewModel.title.value,
                 homeViewModel.comicNumber.value
             )
+        }
+
+        binding.imgActionFavorite.setOnClickListener {
+            homeViewModel.toggleFavorite()
         }
 
         binding.fabShuffle.setOnClickListener {

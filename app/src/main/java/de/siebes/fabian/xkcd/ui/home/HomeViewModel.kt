@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import de.siebes.fabian.xkcd.helper.ComicLoader
+import de.siebes.fabian.xkcd.helper.FavoriteManager
 import de.siebes.fabian.xkcd.model.Comic
 import kotlinx.coroutines.launch
 import java.util.Random
@@ -24,6 +25,10 @@ class HomeViewModel : ViewModel() {
         value = null
     }
 
+    private val _isFavorite = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
     val loading: LiveData<Boolean> = _loading
 
     val error: LiveData<Boolean> = _error
@@ -35,6 +40,8 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _comic.value = ComicLoader.loadComic(comicNumber)
+                if(_comic.value != null)
+                    _isFavorite.value = FavoriteManager.isFavorite(_comic.value!!)
             } catch (e: Exception) {
                 e.printStackTrace()
                 _error.value = true
@@ -75,4 +82,17 @@ class HomeViewModel : ViewModel() {
     val imgUrl: LiveData<String> = _comic.map { it?.imgUrl ?: "" }
 
     val altText: LiveData<String> = _comic.map { it?.alt ?: "" }
+
+    val isFavorite: LiveData<Boolean> = _isFavorite
+
+    fun toggleFavorite() {
+        val comic = _comic.value ?: return
+        if (FavoriteManager.isFavorite(comic)) {
+            FavoriteManager.removeFavorite(comic)
+            _isFavorite.value = false
+        } else {
+            FavoriteManager.addFavorite(comic)
+            _isFavorite.value = true
+        }
+    }
 }
