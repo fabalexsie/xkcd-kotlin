@@ -15,40 +15,48 @@ class HomeViewModel : ViewModel() {
         value = false
     }
 
+    private val _error = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
     private val _comic = MutableLiveData<Comic>().apply {
         value = null
     }
 
-    private val _error = MutableLiveData<String?>()
-
     val loading: LiveData<Boolean> = _loading
 
-    val error: LiveData<String?> = _error
+    val error: LiveData<Boolean> = _error
 
     fun loadComic(comicNumber: Int? = null) {
-        _error.value = null
         _loading.value = true
+        _error.value = false
+        _comic.value = null
         viewModelScope.launch {
-                try {
-                    _comic.value = ComicLoader.loadComic(comicNumber)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    _error.value = e.message
-                } finally {
-                    _loading.value = false
-                }
+            try {
+                _comic.value = ComicLoader.loadComic(comicNumber)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _error.value = true
+            } finally {
+                _loading.value = false
+            }
         }
     }
 
     val comicNumber: LiveData<Int?> = _comic.map { it?.num }
 
-    val title: LiveData<String> = _comic.map { it?.title ?: "Loading..." }
+    val title: LiveData<String> = _comic.map { it?.title ?: "" }
 
     val dateStr: LiveData<String> = _comic.map {
         if (it == null) {
-            "Loading..." // TODO: use string resource
+            ""
         } else {
-            "${it.day.padStart(2, '0')}.${it.month.padStart(2, '0')}.${it.year}" // TODO use SimpleDateFormatter
+            "${it.day.padStart(2, '0')}.${
+                it.month.padStart(
+                    2,
+                    '0'
+                )
+            }.${it.year}" // TODO use SimpleDateFormatter
         }
     }
 

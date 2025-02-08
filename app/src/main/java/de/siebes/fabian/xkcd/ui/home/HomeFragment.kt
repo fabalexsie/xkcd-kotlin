@@ -34,9 +34,18 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val tvTitle: TextView = binding.txtTitle
+        homeViewModel.comicNumber.observe(viewLifecycleOwner) {
+            if (it != null) {
+                (activity as AppCompatActivity).supportActionBar?.title =
+                    getString(R.string.title_home) + " #$it"
+            } else {
+                (activity as AppCompatActivity).supportActionBar?.title =
+                    getString(R.string.title_home)
+            }
+        }
+
         homeViewModel.title.observe(viewLifecycleOwner) {
-            tvTitle.text = it
+            binding.txtTitle.text = it
         }
 
         homeViewModel.dateStr.observe(viewLifecycleOwner) {
@@ -50,22 +59,38 @@ class HomeFragment : Fragment() {
             }
         }
 
+        homeViewModel.altText.observe(viewLifecycleOwner) {
+            TooltipCompat.setTooltipText(binding.imgComic, it)
+        }
+
         homeViewModel.loading.observe(viewLifecycleOwner) {
             binding.progressComicLoading.visibility = if (it) View.VISIBLE else View.GONE
         }
 
-        homeViewModel.comicNumber.observe(viewLifecycleOwner) {
-            if(it != null) {
-                (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.title_home) + " #$it"
+        homeViewModel.error.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.txtError.visibility = View.VISIBLE
+                binding.imgError.visibility = View.VISIBLE
+                binding.txtTitle.visibility = View.GONE
+                binding.txtDate.visibility = View.GONE
+                binding.imgComic.visibility = View.GONE
             } else {
-                (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.title_home)
+                binding.txtError.visibility = View.GONE
+                binding.imgError.visibility = View.GONE
+                binding.txtTitle.visibility = View.VISIBLE
+                binding.txtDate.visibility = View.VISIBLE
+                binding.imgComic.visibility = View.VISIBLE
             }
         }
 
         homeViewModel.loadComic() // load current comic
 
-        homeViewModel.altText.observe(viewLifecycleOwner) {
-            TooltipCompat.setTooltipText(binding.imgComic, it)
+        binding.clPreviousComic.setOnClickListener {
+            homeViewModel.loadComic(homeViewModel.comicNumber.value?.minus(1))
+        }
+
+        binding.clNextComic.setOnClickListener {
+            homeViewModel.loadComic(homeViewModel.comicNumber.value?.plus(1))
         }
 
         return root

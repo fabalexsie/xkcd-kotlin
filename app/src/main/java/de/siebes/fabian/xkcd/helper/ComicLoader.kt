@@ -16,11 +16,10 @@ object ComicLoader {
     // Run on IO dispatcher, to avoid network requests on main thread
     @Throws(ComicNotFoundException::class)
     suspend fun loadComic(comicNumber: Int? = null): Comic = withContext(Dispatchers.IO) {
-        val url: String
-        if (comicNumber == null) {
-            url = "$BASE_URL/info.0.json";
+        val url: String = if (comicNumber == null) {
+            "$BASE_URL/info.0.json";
         } else {
-            url = "$BASE_URL/$comicNumber/info.0.json";
+            "$BASE_URL/$comicNumber/info.0.json";
         }
 
         val request = Request.Builder()
