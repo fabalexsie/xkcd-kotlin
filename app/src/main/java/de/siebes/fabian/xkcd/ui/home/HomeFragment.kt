@@ -26,13 +26,21 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        // load current comic on first start
+        homeViewModel.loadComic() // load current comic
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -93,8 +101,6 @@ class HomeFragment : Fragment() {
                 binding.imgActionFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp)
             }
         }
-
-        homeViewModel.loadComic() // load current comic
 
         binding.clPreviousComic.setOnClickListener {
             homeViewModel.loadComic(homeViewModel.comicNumber.value?.minus(1)) // if loaded comic is null -> comicNumber is null -> load current comic
