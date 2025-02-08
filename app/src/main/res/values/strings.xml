@@ -3,4 +3,6 @@
     <string name="title_home">xkcd</string>
     <string name="title_favorites">Favorites</string>
     <string name="comic_not_found">Comic not found</string>
+    <string name="content_description_download">Download Image</string>
+    <string name="download_started">Download started</string>
 </resources>

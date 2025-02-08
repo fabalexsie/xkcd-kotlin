@@ -1,11 +1,15 @@
 package de.siebes.fabian.xkcd.ui.home
 
+import android.app.DownloadManager
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil3.load
@@ -92,7 +96,25 @@ class HomeFragment : Fragment() {
             homeViewModel.loadComic(homeViewModel.comicNumber.value?.plus(1)) // if loaded comic is null -> comicNumber is null -> load current comic
         }
 
+        binding.imgActionDownload.setOnClickListener {
+            saveToDownloads(homeViewModel.imgUrl.value, homeViewModel.title.value, homeViewModel.comicNumber.value)
+        }
+
         return root
+    }
+
+    private fun saveToDownloads(url: String?, title: String?, comicNumber: Int?) {
+        val downloadManager: DownloadManager =
+            requireActivity().getSystemService(AppCompatActivity.DOWNLOAD_SERVICE) as DownloadManager
+        val request = DownloadManager.Request(url?.toUri())
+            .setTitle(title)
+            .setDestinationInExternalPublicDir(
+                Environment.DIRECTORY_DOWNLOADS,
+                "xkcd/$comicNumber.png"
+            )
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        downloadManager.enqueue(request)
+        Toast.makeText(context, getString(R.string.download_started), Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
