@@ -9,9 +9,13 @@ import de.siebes.fabian.xkcd.helper.ComicLoader
 import de.siebes.fabian.xkcd.helper.FavoriteManager
 import de.siebes.fabian.xkcd.model.Comic
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 import java.util.Random
 
 class HomeViewModel : ViewModel() {
+
+    private val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY)
 
     private val _loading = MutableLiveData<Boolean>().apply {
         value = false
@@ -70,12 +74,7 @@ class HomeViewModel : ViewModel() {
         if (it == null) {
             ""
         } else {
-            "${it.day.padStart(2, '0')}.${
-                it.month.padStart(
-                    2,
-                    '0'
-                )
-            }.${it.year}" // TODO use SimpleDateFormatter
+            sdf.format(it.date)
         }
     }
 

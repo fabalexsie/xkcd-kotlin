@@ -1,12 +1,12 @@
 package de.siebes.fabian.xkcd.model
 
 import org.json.JSONObject
+import java.util.Calendar
+import java.util.Date
 
 data class Comic(
     val num: Int,
-    val day: String,
-    val month: String,
-    val year: String,
+    val date: Date,
     val title: String,
     val safeTitle: String,
     val imgUrl: String,
@@ -19,11 +19,15 @@ data class Comic(
     companion object {
         fun fromJson(json: String): Comic {
             val jsonObject = JSONObject(json)
+            val cal = Calendar.getInstance()
+            cal.set(
+                Integer.parseInt(jsonObject.getString("year")),
+                Integer.parseInt(jsonObject.getString("month")) -1,
+                Integer.parseInt(jsonObject.getString("day"))
+            )
             return Comic(
                 jsonObject.getInt("num"),
-                jsonObject.getString("day"),
-                jsonObject.getString("month"),
-                jsonObject.getString("year"),
+                cal.time,
                 jsonObject.getString("title"),
                 jsonObject.getString("safe_title"),
                 jsonObject.getString("img"),
