@@ -17,8 +17,9 @@ import coil3.request.crossfade
 import coil3.request.placeholder
 import de.siebes.fabian.xkcd.R
 import de.siebes.fabian.xkcd.databinding.FragmentHomeBinding
+import de.siebes.fabian.xkcd.ui.IFragmentReselected
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), IFragmentReselected {
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -146,5 +147,10 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun fragmentReselected() {
+        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel.loadComic()
     }
 }
