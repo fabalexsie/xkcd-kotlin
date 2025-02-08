@@ -10,6 +10,7 @@
         android:id="@+id/linlay_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:minHeight="80dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
@@ -52,8 +53,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linlay_footer"
         app:layout_constraintTop_toBottomOf="@+id/linlay_header">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -134,7 +134,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/bg_prev_next_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linlay_footer"
         app:layout_constraintEnd_toEndOf="@+id/guideline_start"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linlay_header">
@@ -155,7 +155,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/bg_prev_next_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linlay_footer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_end"
         app:layout_constraintTop_toBottomOf="@+id/linlay_header">
@@ -171,5 +171,22 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:id="@+id/linlay_footer"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_weight="1"
+            android:src="@drawable/ic_download_black_24dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
