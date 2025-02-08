@@ -151,6 +151,6 @@ class HomeFragment : Fragment(), IFragmentReselected {
 
     override fun fragmentReselected() {
         val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        homeViewModel.loadComic()
+        homeViewModel.loadComic() // show current comic
     }
 }
