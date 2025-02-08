@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="bg_prev_next_button">#1A000000</color>
     <color name="text_error">#5D0D00</color>
+    <color name="colorDivider">#C2C2C2</color>
 </resources>

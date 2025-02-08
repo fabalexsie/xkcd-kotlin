@@ -23,4 +23,8 @@ object FavoriteManager {
         }
         return false
     }
+
+    fun getFavorites(): List<Comic> {
+        return favorites.sortedBy { it.num }
+    }
 }
