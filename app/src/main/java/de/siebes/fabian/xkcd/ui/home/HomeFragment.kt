@@ -97,7 +97,15 @@ class HomeFragment : Fragment() {
         }
 
         binding.imgActionDownload.setOnClickListener {
-            saveToDownloads(homeViewModel.imgUrl.value, homeViewModel.title.value, homeViewModel.comicNumber.value)
+            saveToDownloads(
+                homeViewModel.imgUrl.value,
+                homeViewModel.title.value,
+                homeViewModel.comicNumber.value
+            )
+        }
+
+        binding.fabShuffle.setOnClickListener {
+            homeViewModel.loadRandomComic()
         }
 
         return root

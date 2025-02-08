@@ -13,6 +13,8 @@ object ComicLoader {
 
     private val okHttpClient = OkHttpClient()
 
+    private var highestComicNumber: Int? = null
+
     // Run on IO dispatcher, to avoid network requests on main thread
     @Throws(ComicNotFoundException::class)
     suspend fun loadComic(comicNumber: Int? = null): Comic = withContext(Dispatchers.IO) {
@@ -33,7 +35,20 @@ object ComicLoader {
             )
             val body =
                 response.body ?: throw ComicNotFoundException(comicNumber, "Response body is null")
-            return@withContext Comic.fromJson(body.string())
+            val comic = Comic.fromJson(body.string())
+            if(comicNumber == null && highestComicNumber == null) {
+                highestComicNumber = comic.num
+            }
+            return@withContext comic
+        }
+    }
+
+    suspend fun getHighestComicNumber(): Int {
+        if(highestComicNumber != null) {
+            return highestComicNumber!!
+        } else {
+            loadComic(null)
+            return highestComicNumber!!
         }
     }
 }

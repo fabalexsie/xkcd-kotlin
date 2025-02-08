@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import de.siebes.fabian.xkcd.helper.ComicLoader
 import de.siebes.fabian.xkcd.model.Comic
 import kotlinx.coroutines.launch
+import java.util.Random
 
 class HomeViewModel : ViewModel() {
 
@@ -40,6 +41,17 @@ class HomeViewModel : ViewModel() {
             } finally {
                 _loading.value = false
             }
+        }
+    }
+
+    fun loadRandomComic() {
+        viewModelScope.launch {
+            val rnd = Random()
+            val highestComicNumber = ComicLoader.getHighestComicNumber()
+            // generate a random number between 1 and highestComicNumber (both inclusive)
+            val comicNumber =
+                rnd.nextInt(highestComicNumber) + 1
+            loadComic(comicNumber)
         }
     }
 
