@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
 import androidx.fragment.app.Fragment
@@ -55,7 +54,7 @@ class HomeFragment : Fragment() {
         homeViewModel.imgUrl.observe(viewLifecycleOwner) {
             binding.imgComic.load(it) {
                 crossfade(true)
-                placeholder(R.drawable.loading_image_black_24dp)
+                placeholder(R.drawable.ic_loading_image_black_24dp)
             }
         }
 
