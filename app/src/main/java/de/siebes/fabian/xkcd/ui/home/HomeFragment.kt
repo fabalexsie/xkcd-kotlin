@@ -86,11 +86,11 @@ class HomeFragment : Fragment() {
         homeViewModel.loadComic() // load current comic
 
         binding.clPreviousComic.setOnClickListener {
-            homeViewModel.loadComic(homeViewModel.comicNumber.value?.minus(1))
+            homeViewModel.loadComic(homeViewModel.comicNumber.value?.minus(1)) // if loaded comic is null -> comicNumber is null -> load current comic
         }
 
         binding.clNextComic.setOnClickListener {
-            homeViewModel.loadComic(homeViewModel.comicNumber.value?.plus(1))
+            homeViewModel.loadComic(homeViewModel.comicNumber.value?.plus(1)) // if loaded comic is null -> comicNumber is null -> load current comic
         }
 
         return root
